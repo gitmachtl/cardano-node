@@ -677,7 +677,7 @@ pQueryCmd =
     pQueryUTxO =
       QueryUTxO
         <$> pCardanoEra
-        <*> pProtocol
+        <*> pConsensusModeParams
         <*> pQueryFilter
         <*> pNetworkId
         <*> pMaybeOutputFile
