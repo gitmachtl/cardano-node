@@ -106,7 +106,7 @@ parseByronCommands = asum
   ]
  where
    subParser :: String -> ParserInfo ByronCommand -> Parser ByronCommand
-   subParser name pInfo = Opt.subparser $ Opt.command name pInfo
+   subParser name pInfo = Opt.subparser $ Opt.command name pInfo <> Opt.metavar name
 
 pNodeCmdBackwardCompatible :: Parser NodeCmd
 pNodeCmdBackwardCompatible = Opt.subparser $ pNodeCmd <> Opt.internal
