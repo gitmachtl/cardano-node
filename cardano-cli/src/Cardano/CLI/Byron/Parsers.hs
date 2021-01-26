@@ -215,8 +215,7 @@ parseKeyRelatedValues =
             "migrate-delegate-key-from"
             "Migrate a delegate key from an older version."
             $ MigrateDelegateKeyFrom
-                <$> parseByronKeyFormat -- Old Byron key format
-                <*> parseSigningKeyFile "from" "Signing key file to migrate."
+                <$> parseSigningKeyFile "from" "Legacy signing key file to migrate."
                 <*> parseNewSigningKeyFile "to"
         ]
 
