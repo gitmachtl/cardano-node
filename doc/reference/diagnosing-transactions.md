@@ -1,11 +1,11 @@
 # Diagnosing transactions problems and troubleshooting
 
-If you experience any problems while setting up your network, we are here to help. Logs created by the nodes will help us classify any problems and suggest solutions. The log levels used are info, debug, and trace. 
+If you experience any problems while setting up your network, we are here to help. Logs created by the nodes will help us classify any problems and suggest solutions. The log levels used are info, debug, and trace.
 This section outlines how to diagnose and solve some problems that you may encounter:
 
 **Problem**: Failed reading: Your input is either malformed or not hex encoded:
 
-```$ cardano-cli shelley transaction build-raw \
+```$ cardano-cli transaction build-raw \
 --tx-in f5296e996940b1c81f781594293d423b4250a454f5832b0740a923f74460d34#1 \
 --tx-out $(cat payment2.addr)+100000000 \
 --tx-out $(cat payment.addr)+899832033 \
@@ -13,38 +13,38 @@ This section outlines how to diagnose and solve some problems that you may encou
 --out-file tx001.raw
 ```
 
-```> option --tx-in: Failed reading: Your input is either 
-malformed or not hex encoded: 
+```> option --tx-in: Failed reading: Your input is either
+malformed or not hex encoded:
 f5296e996940b1c81f781594293d423b4250a454f5832b0740a923f74460d34
 ```
 
-**Diagnosis**:  tx-in is not a valid UTXO 
+**Diagnosis**:  tx-in is not a valid UTXO
 
-**Solution**: Make sure that you are using a correct UTXO. You can query this with: 
+**Solution**: Make sure that you are using a correct UTXO. You can query this with:
 
-```$ cardano-cli shelley query utxo \
+```$ cardano-cli query utxo \
  --address $(cat payment.addr) \
  --mainnet
 ```
 
 **Problem**: ExpiredUTxO
 
-```$ cardano-cli shelley transaction submit \
+```$ cardano-cli transaction submit \
 > --tx-file tx001.signed \
 > --mainnet
 ```
 
 ```> ApplyTxError [LedgerFailure (UtxowFailure (UtxoFailure(ExpiredUTxO {pfUTXOttl = SlotNo {unSlotNo = 123456}, pfUTXOcurrentSlot = SlotNo {unSlotNo = 123457}})))]
 ```
-**Diagnosis**: TTL has already passed. 
+**Diagnosis**: TTL has already passed.
 
-**Solution**: Look at pfUTXOttl and pfUTXOcurrentSlot. Current Slot is ahead of UTXOttl. 
+**Solution**: Look at pfUTXOttl and pfUTXOcurrentSlot. Current Slot is ahead of UTXOttl.
 
-Build a new transaction with a TTL (time to live) higher than Current Slot. As a rule of thumb, you will need between 300-500 slots to build, sign, and submit the transaction.  
+Build a new transaction with a TTL (time to live) higher than Current Slot. As a rule of thumb, you will need between 300-500 slots to build, sign, and submit the transaction.
 
 **Problem**: ValueNotConservedUTxO
 
-```$ cardano-cli shelley transaction submit \
+```$ cardano-cli transaction submit \
 > --tx-file tx001.signed \
 > --mainnet
 ```
@@ -55,9 +55,9 @@ Build a new transaction with a TTL (time to live) higher than Current Slot. As a
 
 **Solution**: Check that output amount is equal to input amount
 
-**Problem**: BadInputsUTxO 
+**Problem**: BadInputsUTxO
 
-```$ cardano-cli shelley transaction submit \
+```$ cardano-cli transaction submit \
 --tx-file tx001.signed \
 --mainnet
 ```
@@ -67,7 +67,7 @@ Build a new transaction with a TTL (time to live) higher than Current Slot. As a
 
 **Solution**: Verify the UTXO transaction index using:
 
-```$ cardano-cli shelley query utxo \
+```$ cardano-cli query utxo \
  --address $(cat payment.addr) \
  --mainnet
 ```

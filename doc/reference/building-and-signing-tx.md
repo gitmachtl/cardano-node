@@ -22,7 +22,7 @@ To create a transaction we need to follow this process:
 
 Query and save the parameters in **protocol.json**
 
-    cardano-cli shelley query protocol-parameters \
+    cardano-cli query protocol-parameters \
     --mainnet \
     --out-file protocol.json
 
@@ -30,7 +30,7 @@ Query and save the parameters in **protocol.json**
 
 In the draft `tx-out`, `ttl` and `fee` can be zero. Later we use the `out-file` `tx.draft` to calculate the `fee`
 
-    cardano-cli shelley transaction build-raw \
+    cardano-cli transaction build-raw \
     --tx-in <TxHash>#<TxIx> \
     --tx-out <Address>+<Lovelace> \
     --tx-out <Address>+0 \
@@ -40,9 +40,9 @@ In the draft `tx-out`, `ttl` and `fee` can be zero. Later we use the `out-file` 
 
 **Calculate the fee**
 
-Use `tx.draft` as `tx-body-file`. **Witnesses** are the amount of keys that must sign the transaction.   
+Use `tx.draft` as `tx-body-file`. **Witnesses** are the amount of keys that must sign the transaction.
 
-    cardano-cli shelley transaction calculate-min-fee \
+    cardano-cli transaction calculate-min-fee \
     --tx-body-file tx.draft \
     --tx-in-count 1 \
     --tx-out-count 2 \
@@ -59,7 +59,7 @@ For example:
 
 When building and submitting a transaction you need to check the current tip of the blockchain, for example, if the tip is slot 4000, you should set the TTL to (4000 + N slots), so that you have enough time to build and submit a transaction. Submitting a transaction with a TTL set in the past would result in a tx error.
 
-    cardano-cli shelley query tip --mainnet
+    cardano-cli query tip --mainnet
 
 Look for the value of `SlotNo`
 
@@ -73,12 +73,12 @@ Therefore, if N = 200 slots
 
     ttl = 369200 + 200
     ttl = 369400
-    
+
 **Build the transaction**
 
 This time we include all the paramenters:
 
-    cardano-cli shelley transaction build-raw \
+    cardano-cli transaction build-raw \
     --tx-in 4e3a6e7fdcb0d0efa17bf79c13aed2b4cb9baf37fb1aa2e39553d5bd720c5c99#4 \
     --tx-out $(cat payment2.addr)+100000000 \
     --tx-out $(cat payment.addr)+999899832035 \
@@ -90,7 +90,7 @@ This time we include all the paramenters:
 
 A transaction must prove that it has the right to spend its inputs. In the most common case, this means that a transaction must be signed by the signing keys belonging to the payment addresses of the inputs. If a transaction contains certificates, it must additionally be signed by somebody with the right to issue those certificates. For example, a stake address registration certificate must be signed by the signing key of the corresponding stake key pair.
 
-    cardano-cli shelley transaction sign \
+    cardano-cli transaction sign \
     --tx-body-file tx.raw \
     --signing-key-file payment.skey \
     --mainnet \
@@ -98,6 +98,6 @@ A transaction must prove that it has the right to spend its inputs. In the most 
 
 **Submit**
 
-    cardano-cli shelley transaction submit \
+    cardano-cli transaction submit \
     --tx-file tx.signed \
     --mainnet
