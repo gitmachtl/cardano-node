@@ -538,9 +538,9 @@ testnet testnetOptions H.Conf {..} = do
 
   -- TODO: this will become the transaction to register the pool, etc.
   -- We'll need to pick the tx-in from the actual UTxO since it contains the txid,
-  -- we'll have to query this via cardano-cli shelley query utxo.
+  -- we'll have to query this via cardano-cli query utxo.
 
-  {-  cardano-cli shelley transaction build-raw \
+  {-  cardano-cli transaction build-raw \
           --ttl 1000000 --fee 0 \
           --tx-in 67209bfcdf78f8cd86f649da75053a80fb9bb3fad68465554f9301c31b496c65#0 \
           --tx-out $(cat example/addresses/user1.addr)+450000000 \
@@ -551,12 +551,12 @@ testnet testnetOptions H.Conf {..} = do
           --out-file example/register-pool.txbody
   -}
 
-  {-  cardano-cli shelley address convert \
+  {-  cardano-cli address convert \
           --byron-key-file example/byron/payment-keys.000.key \
           --signing-key-file example/byron/payment-keys.000-converted.key
   -}
 
-  {-  cardano-cli shelley transaction sign \
+  {-  cardano-cli transaction sign \
           --tx-body-file example/register-pool.txbody \
           --testnet-magic 42 \
           --signing-key-file example/byron/payment-keys.000-converted.key \
@@ -567,7 +567,7 @@ testnet testnetOptions H.Conf {..} = do
           --out-file example/register-pool.tx
   -}
 
-  {-  cardano-cli shelley transaction submit \
+  {-  cardano-cli transaction submit \
           --tx-file example/register-pool.tx --testnet-magic 42
   -}
 
