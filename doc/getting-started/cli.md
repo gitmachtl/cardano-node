@@ -13,10 +13,6 @@ We can get the top level help by simply typing the command without arguments:
 
         cardano-cli
 
-We will be told that one available subcommand is `shelley`, and typing
-
-        cardano-cli
-
 will display available sub-subcommands, one of which is `node`. We can continue drilling down the hierarchy:
 
         cardano-cli node

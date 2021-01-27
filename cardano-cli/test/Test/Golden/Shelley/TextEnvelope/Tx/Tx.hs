@@ -30,14 +30,14 @@ golden_shelleyTx = propertyOnce . H.moduleWorkspace "tmp" $ \tempDir -> do
 
   -- Generate payment signing key to sign transaction
   void $ execCardanoCLI
-    [ "shelley","address","key-gen"
+    [ "address","key-gen"
     , "--verification-key-file", paymentVerKey
     , "--signing-key-file", paymentSignKey
     ]
 
   -- Create transaction body
   void $ execCardanoCLI
-    [ "shelley","transaction", "build-raw"
+    [ "transaction", "build-raw"
     , "--tx-in", "91999ea21177b33ebe6b8690724a0c026d410a11ad7521caa350abdafa5394c3#0"
     , "--tx-out", "addr1v9wmu83pzajplrtpsq6tsqdgwr98x888trpmah2u0ezznsge7del3+100000000"
     , "--fee", "1000000"
@@ -47,7 +47,7 @@ golden_shelleyTx = propertyOnce . H.moduleWorkspace "tmp" $ \tempDir -> do
 
   -- Sign transaction
   void $ execCardanoCLI
-    [ "shelley","transaction", "sign"
+    [ "transaction", "sign"
     , "--tx-body-file", transactionBodyFile
     , "--signing-key-file", paymentSignKey
     , "--mainnet"
