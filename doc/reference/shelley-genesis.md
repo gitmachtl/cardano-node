@@ -14,31 +14,38 @@ $ cardano-cli version
 cardano-cli 1.21.1 - linux-x86_64 - ghc-8.6
 ```
 
-Everything we'll be doing uses the `shelley` sub-command
+Everything will be done in the Shelley era.
 
 ```bash
 $ cardano-cli
-Usage: cardano-cli COMMAND
-  Shelley specific commands
+Usage: cardano-cli (Era based commands | Byron specific commands |
+                     Miscellaneous commands)
 
 Available options:
+  --version                Show the cardano-cli version
   -h,--help                Show this help text
 
-Available commands:
-  address                  Shelley payment address commands
-  stake-address            Shelley stake address commands
-  key                      Shelley key utility commands
-  transaction              Shelley transaction commands
-  node                     Shelley node operaton commands
-  stake-pool               Shelley stake pool commands
-  query                    Shelley node query commands. Will query the local
-                           node whose Unix domain socket is obtained from the
+Era based commands
+  address                  Payment address commands
+  stake-address            Stake address commands
+  key                      Key utility commands
+  transaction              Transaction commands
+  node                     Node operaton commands
+  stake-pool               Stake pool commands
+  query                    Node query commands. Will query the local node whose
+                           Unix domain socket is obtained from the
                            CARDANO_NODE_SOCKET_PATH enviromnent variable.
-  genesis                  Shelley genesis block commands
-  governance               Shelley governance commands
+  genesis                  Genesis block commands
+  governance               Governance commands
   text-view                Commands for dealing with Shelley TextView files.
                            Transactions, addresses etc are stored on disk as
                            TextView files.
+
+Byron specific commands
+  byron                    Byron specific commands
+
+Miscellaneous commands
+  version                  Show the cardano-cli version
 ```
 
 We'll put all files under an `example` directory.
@@ -542,8 +549,13 @@ But for demos it is fine
 
 ```bash
 $ cardano-cli genesis
-Usage: cardano-cli genesis COMMAND
-  Shelley genesis block commands
+Usage: cardano-cli genesis (key-gen-genesis | key-gen-delegate | key-gen-utxo |
+                             key-hash | get-ver-key | initial-addr |
+                             initial-txin | create | create-staked | hash)
+  Genesis block commands
+
+Available options:
+  -h,--help                Show this help text
 
 Available commands:
   key-gen-genesis          Create a Shelley genesis key pair
@@ -557,6 +569,8 @@ Available commands:
                            verification key
   create                   Create a Shelley genesis file from a genesis template
                            and genesis/delegation/spending keys.
+  create-staked            Create a staked Shelley genesis file from a genesis
+                           template and genesis/delegation/spending keys.
   hash                     Compute the hash of a genesis file
 ```
 
@@ -1128,28 +1142,34 @@ we expect. We'll need a third terminal.
 We'll start with querying the node to see the current set of protocol parameters.
 ```bash
 $ cardano-cli query protocol-parameters
-Usage: cardano-cli query protocol-parameters [--shelley-mode |
-                                                       --byron-mode
-                                                       [--epoch-slots NATURAL] |
-                                                       --cardano-mode
-                                                       [--epoch-slots NATURAL]]
-                                                     (--mainnet |
-                                                       --testnet-magic NATURAL)
-                                                     [--out-file FILE]
+Usage: cardano-cli query protocol-parameters [--byron-era | --shelley-era |
+                                               --allegra-era | --mary-era]
+                                             [--shelley-mode | --byron-mode
+                                               [--epoch-slots NATURAL] |
+                                               --cardano-mode
+                                               [--epoch-slots NATURAL]]
+                                             (--mainnet |
+                                               --testnet-magic NATURAL)
+                                             [--out-file FILE]
   Get the node's current protocol parameters
 
 Available options:
+  --byron-era              Specify the Byron era
+  --shelley-era            Specify the Shelley era (default)
+  --allegra-era            Specify the Allegra era
+  --mary-era               Specify the Mary era
   --shelley-mode           For talking to a node running in Shelley-only mode.
   --byron-mode             For talking to a node running in Byron-only mode.
-  --epoch-slots NATURAL    The number of slots per epoch for the Byron
-                           era. (default: 21600)
+  --epoch-slots NATURAL    The number of slots per epoch for the Byron era.
+                           (default: 21600)
   --cardano-mode           For talking to a node running in full Cardano mode
                            (default).
-  --epoch-slots NATURAL    The number of slots per epoch for the Byron
-                           era. (default: 21600)
+  --epoch-slots NATURAL    The number of slots per epoch for the Byron era.
+                           (default: 21600)
   --mainnet                Use the mainnet magic id.
   --testnet-magic NATURAL  Specify a testnet magic id.
   --out-file FILE          Optional output file. Default is to write to stdout.
+  -h,--help                Show this help text
 ```
 
 The only surprising extra flag is the "network magic". This is the
@@ -1218,27 +1238,34 @@ address.
 
 ```bash
 $ cardano-cli query utxo
-Usage: cardano-cli query utxo [--shelley-mode | --byron-mode
-                                        [--epoch-slots NATURAL] |
-                                        --cardano-mode [--epoch-slots NATURAL]]
-                                      [--address ADDRESS]
-                                      (--mainnet | --testnet-magic NATURAL)
-                                      [--out-file FILE]
+Usage: cardano-cli query utxo [--byron-era | --shelley-era | --allegra-era |
+                                --mary-era]
+                              [--shelley-mode | --byron-mode
+                                [--epoch-slots NATURAL] |
+                                --cardano-mode [--epoch-slots NATURAL]]
+                              [(--address ADDRESS)]
+                              (--mainnet | --testnet-magic NATURAL)
+                              [--out-file FILE]
   Get the node's current UTxO with the option of filtering by address(es)
 
 Available options:
+  --byron-era              Specify the Byron era
+  --shelley-era            Specify the Shelley era (default)
+  --allegra-era            Specify the Allegra era
+  --mary-era               Specify the Mary era
   --shelley-mode           For talking to a node running in Shelley-only mode.
   --byron-mode             For talking to a node running in Byron-only mode.
-  --epoch-slots NATURAL    The number of slots per epoch for the Byron
-                           era. (default: 21600)
+  --epoch-slots NATURAL    The number of slots per epoch for the Byron era.
+                           (default: 21600)
   --cardano-mode           For talking to a node running in full Cardano mode
                            (default).
-  --epoch-slots NATURAL    The number of slots per epoch for the Byron
-                           era. (default: 21600)
+  --epoch-slots NATURAL    The number of slots per epoch for the Byron era.
+                           (default: 21600)
   --address ADDRESS        Filter by Cardano address(es) (Bech32-encoded).
   --mainnet                Use the mainnet magic id.
   --testnet-magic NATURAL  Specify a testnet magic id.
   --out-file FILE          Optional output file. Default is to write to stdout.
+  -h,--help                Show this help text
 ```
 
 So what address do we need? We need to build the bech32 address of a utxo verification key as follows:
@@ -1396,25 +1423,37 @@ to use the low level command to select the exact UTxO to spend.
 
 ```bash
 $ cardano-cli transaction build-raw
-Usage: cardano-cli transaction build-raw --tx-in TX-IN --tx-out TX-OUT
-                                                 --ttl SLOT --fee LOVELACE
-                                                 [--certificate-file FILE]
-                                                 [--withdrawal WITHDRAWAL]
-                                                 [--json-metadata-no-schema |
-                                                   --json-metadata-detailed-schema]
-                                                 [--metadata-json-file FILE |
-                                                   --metadata-cbor-file FILE]
-                                                 [--update-proposal-file FILE]
-                                                 --out-file FILE
+Usage: cardano-cli transaction build-raw [--byron-era | --shelley-era |
+                                           --allegra-era | --mary-era]
+                                         (--tx-in TX-IN) [--tx-out TX-OUT]
+                                         [--mint VALUE] [--invalid-before SLOT]
+                                         [--invalid-hereafter SLOT]
+                                         [--fee LOVELACE]
+                                         [--certificate-file FILE]
+                                         [--withdrawal WITHDRAWAL]
+                                         [--json-metadata-no-schema |
+                                           --json-metadata-detailed-schema]
+                                         [--script-file FILE]
+                                         [--metadata-json-file FILE |
+                                           --metadata-cbor-file FILE]
+                                         [--update-proposal-file FILE]
+                                         --out-file FILE
   Build a transaction (low-level, inconvenient)
 
 Available options:
+  --byron-era              Specify the Byron era
+  --shelley-era            Specify the Shelley era (default)
+  --allegra-era            Specify the Allegra era
+  --mary-era               Specify the Mary era
   --tx-in TX-IN            The input transaction as TxId#TxIx where TxId is the
                            transaction hash and TxIx is the index.
-  --tx-out TX-OUT          The output transaction as Address+Lovelace where
+  --tx-out TX-OUT          The transaction output as Address+Lovelace where
                            Address is the Bech32-encoded address followed by the
                            amount in Lovelace.
-  --ttl SLOT               Time to live (in slots).
+  --mint VALUE             Mint multi-asset value(s) with the multi-asset cli
+                           syntax
+  --invalid-before SLOT    Time that transaction is valid from (in slots).
+  --invalid-hereafter SLOT Time that transaction is valid until (in slots).
   --fee LOVELACE           The fee amount in Lovelace.
   --certificate-file FILE  Filepath of the certificate. This encompasses all
                            types of certificates (stake pool certificates, stake
@@ -1428,6 +1467,7 @@ Available options:
   --json-metadata-detailed-schema
                            Use the "detailed schema" conversion from JSON to tx
                            metadata.
+  --script-file FILE       Filepath of the script.
   --metadata-json-file FILE
                            Filepath of the metadata file, in JSON format.
   --metadata-cbor-file FILE
@@ -1466,9 +1506,10 @@ So we build the unsigned transaction and place it in `example/tx1.txbody`
 
 ```bash
 $ cardano-cli transaction build-raw \
+    --shelley-era \
     --tx-in  e727f95ad8eedf5153405f4f3eb6fb797aba94f8d4ca18b09918459fccb798b8#0 \
     --tx-out addr_test1vzrqr58zm3un86sfeze6039gj8v406p3zt4su0qkemc5vyqrs09az+500000000 \
-    --ttl 3600 \
+    --invalid-hereafter 3600 \
     --fee 0 \
     --tx-body-file example/tx1.txbody
 ```
@@ -1550,6 +1591,7 @@ So let's do it.
 ```bash
 CARDANO_NODE_SOCKET_PATH=example/node1/node.sock \
     cardano-cli transaction submit \
+      --shelley-mode \
       --tx-file example/tx1.tx \
       --testnet-magic 42 \
       --shelley-mode
@@ -1564,6 +1606,7 @@ the funds to
 ```bash
 CARDANO_NODE_SOCKET_PATH=example/node1/node.sock \
     cardano-cli query utxo \
+      --shelley-mode \
       --testnet-magic 42 \
       --shelley-mode \
       --address addr_test1vzrqr58zm3un86sfeze6039gj8v406p3zt4su0qkemc5vyqrs09az

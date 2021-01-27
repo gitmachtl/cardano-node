@@ -37,13 +37,13 @@ cardano-cli query utxo \
 
 Create a draft for the transaction and save it in tx.draft
 
-Note that for `--tx-in` we use the following syntax: `TxId#TxIx` where `TxId` is the transaction hash and `TxIx` is the index; for `--tx-out` we use: `TxOut+Lovelace` where `TxOut` is the hex encoded address followed by the amount in `Lovelace`. For the transaction draft --tx-out, --ttl and --fee can be set to zero.
+Note that for `--tx-in` we use the following syntax: `TxId#TxIx` where `TxId` is the transaction hash and `TxIx` is the index; for `--tx-out` we use: `TxOut+Lovelace` where `TxOut` is the hex encoded address followed by the amount in `Lovelace`. For the transaction draft --tx-out, --invalid-hereafter and --fee can be set to zero.
 
     cardano-cli transaction build-raw \
     --tx-in 4e3a6e7fdcb0d0efa17bf79c13aed2b4cb9baf37fb1aa2e39553d5bd720c5c99#4 \
     --tx-out $(cat payment2.addr)+0 \
     --tx-out $(cat payment.addr)+0 \
-    --ttl 0 \
+    --invalid-hereafter 0 \
     --fee 0 \
     --out-file tx.draft
 
@@ -104,7 +104,7 @@ We write the transaction in a file, we will name it `tx.raw`.
     --tx-in 4e3a6e7fdcb0d0efa17bf79c13aed2b4cb9baf37fb1aa2e39553d5bd720c5c99#4 \
     --tx-out $(cat payment2.addr)+10000000 \
     --tx-out $(cat payment.addr)+9832035 \
-    --ttl 369400 \
+    --invalid-hereafter 369400 \
     --fee 167965 \
     --out-file tx.raw
 

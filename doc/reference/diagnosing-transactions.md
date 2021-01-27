@@ -6,10 +6,11 @@ This section outlines how to diagnose and solve some problems that you may encou
 **Problem**: Failed reading: Your input is either malformed or not hex encoded:
 
 ```$ cardano-cli transaction build-raw \
+--shelley-era \
 --tx-in f5296e996940b1c81f781594293d423b4250a454f5832b0740a923f74460d34#1 \
 --tx-out $(cat payment2.addr)+100000000 \
 --tx-out $(cat payment.addr)+899832033 \
---ttl 335000 --fee 167965 \
+--invalid-hereafter 335000 --fee 167965 \
 --out-file tx001.raw
 ```
 
@@ -23,6 +24,7 @@ f5296e996940b1c81f781594293d423b4250a454f5832b0740a923f74460d34
 **Solution**: Make sure that you are using a correct UTXO. You can query this with:
 
 ```$ cardano-cli query utxo \
+ --shelley-era \
  --address $(cat payment.addr) \
  --mainnet
 ```
@@ -30,21 +32,23 @@ f5296e996940b1c81f781594293d423b4250a454f5832b0740a923f74460d34
 **Problem**: ExpiredUTxO
 
 ```$ cardano-cli transaction submit \
+> --shelley-era \
 > --tx-file tx001.signed \
 > --mainnet
 ```
 
 ```> ApplyTxError [LedgerFailure (UtxowFailure (UtxoFailure(ExpiredUTxO {pfUTXOttl = SlotNo {unSlotNo = 123456}, pfUTXOcurrentSlot = SlotNo {unSlotNo = 123457}})))]
 ```
-**Diagnosis**: TTL has already passed.
+**Diagnosis**: The current slot is outside the validity interval
 
 **Solution**: Look at pfUTXOttl and pfUTXOcurrentSlot. Current Slot is ahead of UTXOttl.
 
-Build a new transaction with a TTL (time to live) higher than Current Slot. As a rule of thumb, you will need between 300-500 slots to build, sign, and submit the transaction.
+Build a new transaction with a invalid-hereafter higher than Current Slot. As a rule of thumb, you will need between 300-500 slots to build, sign, and submit the transaction.
 
 **Problem**: ValueNotConservedUTxO
 
 ```$ cardano-cli transaction submit \
+> --shelley-era \
 > --tx-file tx001.signed \
 > --mainnet
 ```
@@ -58,6 +62,7 @@ Build a new transaction with a TTL (time to live) higher than Current Slot. As a
 **Problem**: BadInputsUTxO
 
 ```$ cardano-cli transaction submit \
+--shelley-era \
 --tx-file tx001.signed \
 --mainnet
 ```
@@ -68,6 +73,7 @@ Build a new transaction with a TTL (time to live) higher than Current Slot. As a
 **Solution**: Verify the UTXO transaction index using:
 
 ```$ cardano-cli query utxo \
+ --shelley-era \
  --address $(cat payment.addr) \
  --mainnet
 ```

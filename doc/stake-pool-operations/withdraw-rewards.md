@@ -32,7 +32,7 @@ You'll withdraw rewards into a payment.addr wich will pay for the transaction fe
     --tx-in a82f8d2a85cde39118a894306ad7a85ba40af221406064a56bdd9b3c61153527#1 \
     --tx-out $(cat payment.addr)+743882981 \
     --withdrawal $(cat stake.addr)+550000000 \
-    --ttl 0 \
+    --invalid-hereafter 0 \
     --fee 0 \
     --out-file withdraw_rewards.raw
 
@@ -58,7 +58,7 @@ You'll withdraw rewards into a payment.addr wich will pay for the transaction fe
     --tx-in a82f8d2a85cde39118a894306ad7a85ba40af221406064a56bdd9b3c61153527#1 \
     --tx-out $(cat payment.addr)+743882981 \
     --withdrawal $(cat stake.addr)+550000000 \
-    --ttl 12345678 \
+    --invalid-hereafter 12345678 \
     --fee 171089 \
     --out-file withdraw_rewards.raw
 

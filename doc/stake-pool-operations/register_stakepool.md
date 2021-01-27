@@ -117,7 +117,7 @@ To submit the `pool registration certificate` and the `delegation certificates` 
     cardano-cli transaction build-raw \
     --tx-in <UTXO>#<TxIx> \
     --tx-out $(cat payment.addr)+0 \
-    --ttl 0 \
+    --invalid-hereafter 0 \
     --fee 0 \
     --out-file tx.draft \
     --certificate-file pool-registration.cert \
@@ -152,7 +152,7 @@ All amounts in Lovelace
     cardano-cli transaction build-raw \
     --tx-in <UTXO>#<TxIx> \
     --tx-out $(cat payment.addr)+<CHANGE IN LOVELACE> \
-    --ttl <TTL> \
+    --invalid-hereafter <TTL> \
     --fee <FEE> \
     --out-file tx.raw \
     --certificate-file pool-registration.cert \

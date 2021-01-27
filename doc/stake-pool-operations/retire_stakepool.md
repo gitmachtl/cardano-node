@@ -55,7 +55,7 @@ Create the deregistration certificate and save it as `pool.deregistration`:
     cardano-cli transaction build-raw \
     --tx-in <UTXO>#<TxIx> \
     --tx-out $(cat payment.addr)+0 \
-    --ttl 0 \
+    --invalid-hereafter 0 \
     --fee 0 \
     --out-file tx.draft \
     --certificate-file pool.deregistration
@@ -99,7 +99,7 @@ Build the raw transaction:
     cardano-cli transaction build-raw \
     --tx-in 9db6cf...#0 \
     --tx-out $(cat payment.addr)+999999096457 \
-    --ttl 860000 \
+    --invalid-hereafter 860000 \
     --fee 171309 \
     --out-file tx.raw \
     --certificate-file pool.deregistration
