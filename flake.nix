@@ -34,7 +34,7 @@
               package = pkgs.cardano-node;
               environment = env;
               cardanoNodePkgs = pkgs;
-              stateDir = "/local";
+              stateDir = "/persist";
               socketPath = "/alloc/node.socket";
               hostAddr = "0.0.0.0";
               port = 3001;
