@@ -33,7 +33,7 @@ golden_shelleyTransactionAllMultiSigWitness = propertyOnce $ H.moduleWorkspace "
     [ "shelley","transaction","build-raw"
     , "--tx-in", txIn
     , "--tx-out", txOut
-    , "--ttl", "60"
+    , "--invalid-hereafter", "60"
     , "--fee", "12"
     , "--tx-body-file", txBodyOutFile
     ]
@@ -66,7 +66,7 @@ golden_shelleyTransactionAnyMultiSigWitness = propertyOnce $ H.moduleWorkspace "
     [ "shelley","transaction","build-raw"
     , "--tx-in", txIn
     , "--tx-out", txOut
-    , "--ttl", "60"
+    , "--invalid-hereafter", "60"
     , "--fee", "12"
     , "--tx-body-file", txBodyOutFile
     ]
@@ -94,7 +94,7 @@ golden_shelleyTransactionAtLeastMultiSigWitness = propertyOnce $ H.moduleWorkspa
     [ "shelley","transaction","build-raw"
     , "--tx-in", txIn
     , "--tx-out", txOut
-    , "--ttl", "60"
+    , "--invalid-hereafter", "60"
     , "--fee", "12"
     , "--tx-body-file", txBodyOutFile
     ]
@@ -122,7 +122,7 @@ golden_shelleyTransactionSigningKeyWitness = propertyOnce $ H.moduleWorkspace "t
     [ "shelley","transaction","build-raw"
     , "--tx-in", txIn
     , "--tx-out", txOut
-    , "--ttl", "60"
+    , "--invalid-hereafter", "60"
     , "--fee", "12"
     , "--tx-body-file", txBodyOutFile
     ]
