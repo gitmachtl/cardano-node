@@ -497,7 +497,7 @@ echo "====================================================================="
 #  4. delegate from the user1 stake address to the stake pool
 
 cardano-cli transaction build-raw \
-    --ttl 1000 \
+    --invalid-hereafter 1000 \
     --fee 0 \
     --tx-in $(cardano-cli genesis initial-txin \
                 --testnet-magic 42 \
@@ -511,7 +511,7 @@ cardano-cli transaction build-raw \
 
 
 # TODO: this will become the transaction to register the pool, etc. We'll need to pick the tx-in from the actual UTxO -- since it contains the txid, we'll have to query this via cardano-cli query utxo.
-# cardano-cli transaction build-raw --ttl 1000000 --fee 0 --tx-in 67209bfcdf78f8cd86f649da75053a80fb9bb3fad68465554f9301c31b496c65#0 --tx-out $(cat example/addresses/user1.addr)+450000000 --certificate-file example/addresses/pool-owner1-stake.reg.cert     --certificate-file example/node-pool1/registration.cert     --certificate-file example/addresses/user1-stake.reg.cert     --certificate-file example/addresses/user1-stake.deleg.cert --out-file example/register-pool.txbody
+# cardano-cli transaction build-raw --invalid-hereafter 1000000 --fee 0 --tx-in 67209bfcdf78f8cd86f649da75053a80fb9bb3fad68465554f9301c31b496c65#0 --tx-out $(cat example/addresses/user1.addr)+450000000 --certificate-file example/addresses/pool-owner1-stake.reg.cert     --certificate-file example/node-pool1/registration.cert     --certificate-file example/addresses/user1-stake.reg.cert     --certificate-file example/addresses/user1-stake.deleg.cert --out-file example/register-pool.txbody
 
 # cardano-cli address convert --byron-key-file example/byron/payment-keys.000.key --signing-key-file example/byron/payment-keys.000-converted.key
 

@@ -17,7 +17,7 @@ module Testnet.Shelley
   ) where
 
 #ifdef UNIX
-import           Prelude (map, Integer)
+import           Prelude (Integer, map)
 #else
 import           Prelude (Integer)
 #endif
@@ -333,7 +333,7 @@ testnet testnetOptions H.Conf {..} = do
 
     void $ H.execCli
       [ "shelley", "transaction", "build-raw"
-      , "--ttl", "1000"
+      , "--invalid-hereafter", "1000"
       , "--fee", "0"
       , "--tx-in", genesisTxinResult
       , "--tx-out", userNAddr <> "+" <> show @Integer (maxLovelaceSupply testnetOptions)

@@ -525,7 +525,7 @@ testnet testnetOptions H.Conf {..} = do
 
     void $ H.execCli
       [ "shelley", "transaction", "build-raw"
-      , "--ttl", "1000"
+      , "--invalid-hereafter", "1000"
       , "--fee", "0"
       , "--tx-in", txIn
       , "--tx-out",  user1Addr <> "+" <> show @Int maxSupply
@@ -541,7 +541,7 @@ testnet testnetOptions H.Conf {..} = do
   -- we'll have to query this via cardano-cli query utxo.
 
   {-  cardano-cli transaction build-raw \
-          --ttl 1000000 --fee 0 \
+          --invalid-hereafter 1000000 --fee 0 \
           --tx-in 67209bfcdf78f8cd86f649da75053a80fb9bb3fad68465554f9301c31b496c65#0 \
           --tx-out $(cat example/addresses/user1.addr)+450000000 \
           --certificate-file example/addresses/pool-owner1-stake.reg.cert \
